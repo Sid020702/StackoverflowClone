@@ -1,4 +1,5 @@
 import * as api from "../api/index.js"
+import { setCurrentUser } from "./currentUser.js"
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
@@ -11,10 +12,12 @@ export const fetchAllUsers = () => async (dispatch) => {
 
 export const updateProfile = (id, updatedData) => async (dispatch) => {
     try {
-        console.log(id)
         const { data } = await api.updateProfile(id, updatedData)
         dispatch({ type: 'UPDATE_CURRENT_USER', payload: data })
     } catch (error) {
         console.log(error)
     }
 }
+
+
+

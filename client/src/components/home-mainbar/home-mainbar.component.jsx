@@ -6,7 +6,6 @@ import './home-mainbar.styles.css'
 import { useSelector } from 'react-redux'
 const HomeMainbar = () => {
     const questionsList = useSelector(state => state.questionsReducer)
-    console.log(questionsList)
 
 
     // var questionsList = [{
@@ -40,12 +39,17 @@ const HomeMainbar = () => {
 
     const location = useLocation()
     const navigate = useNavigate()
-    const user = 1
+    const user = useSelector(state => state.currentUserReducer)
+    console.log(user)
 
     const checkAuth = () => {
         if (user === null) {
             alert("Login or Sign up to ask question")
             navigate('/Auth')
+        }
+
+        else if (!user?.result.subscribed) {
+            alert("Your free trial is over. Kindly subscribe to continue")
         }
         else {
             navigate('/AskQuestion')

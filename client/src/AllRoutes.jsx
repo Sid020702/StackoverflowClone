@@ -8,6 +8,7 @@ import DisplayQuestion from './pages/questions/display-question.component'
 import Tags from './pages/tags/tags.component'
 import Users from './pages/users/users.component'
 import UserProfile from './pages/user-profile/user-profile.component'
+import Subscribe from './pages/subscribe/subscribe.component'
 const AllRoutes = () => {
     return (
         <Routes>
@@ -19,6 +20,7 @@ const AllRoutes = () => {
             <Route exact path="/Tags" element={<Tags />} />
             <Route exact path="/Users" element={<Users />} />
             <Route exact path="/User/:id" element={<UserProfile />} />
+            <Route exact path="/Subscribe" element={<Subscribe />} />
         </Routes>
     )
 }
