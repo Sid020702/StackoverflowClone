@@ -4,7 +4,6 @@ import Stripe from "stripe"
 
 
 
-
 export const getAllUsers = async (req, res) => {
     try {
         const allUsers = await User.find()
@@ -20,13 +19,12 @@ export const getAllUsers = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     const { id: _id } = req.params
-    const { name, about, tags, subscribed } = req.body
-    console.log(subscribed)
+    const { name, about, tags, unlimited, asks, askedOn, plan } = req.body
     if (!mongoose.Types.ObjectId.isValid(_id)) {
         return res.status(404).send('Question unavailable...')
     }
     try {
-        const updatedProfile = await User.findByIdAndUpdate(_id, { $set: { 'name': name, 'about': about, 'tags': tags, 'subscribed': subscribed } }, { new: true })
+        const updatedProfile = await User.findByIdAndUpdate(_id, { $set: { 'name': name, 'about': about, 'tags': tags, 'unlimited': unlimited, 'plan': plan, 'asks': asks === "Gold Plan" ? 1 : asks, 'askedOn': askedOn } }, { new: true })
         res.status(200).json(updatedProfile)
     } catch (error) {
         res.status(404).json({ message: error.message })
@@ -48,6 +46,7 @@ export const createSubscription = async (req, res) => {
 
         // get the price id from the front-end
         const priceId = req.body.priceId;
+        console.log(priceId)
 
         // create a stripe subscription
         const subscription = await stripe.subscriptions.create({
@@ -66,6 +65,8 @@ export const createSubscription = async (req, res) => {
             metadata: { customerEmail: req.body.email }
         });
 
+        console.log(subscription)
+
 
         // return the client secret and subscription id
         return res.json({
@@ -78,3 +79,4 @@ export const createSubscription = async (req, res) => {
 
 
 }
+

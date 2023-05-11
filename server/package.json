@@ -19,6 +19,7 @@
     "mongoose": "^7.0.2",
     "nodemon": "^2.0.21",
     "path": "^0.12.7",
-    "stripe": "^12.4.0"
+    "stripe": "^12.4.0",
+    "two-step-auth": "^1.1.2"
   }
 }
