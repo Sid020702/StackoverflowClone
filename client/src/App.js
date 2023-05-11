@@ -7,8 +7,11 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAllQuestions } from './actions/question';
 import { fetchAllUsers } from './actions/users';
+import Chatbot from './components/chatbot/chatbot.component';
 function App() {
   const dispatch = useDispatch()
+  const widget = document.getElementById('launcher-svg-container')
+  widget?.addEventListener('click', () => { console.log('Clicked') })
   useEffect(() => {
     dispatch(fetchAllQuestions())
     dispatch(fetchAllUsers())
@@ -18,6 +21,7 @@ function App() {
       <Router>
         <Navbar />
         <AllRoutes />
+        {/* <Chatbot /> */}
       </Router>
     </div>
   );

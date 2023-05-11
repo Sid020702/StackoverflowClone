@@ -23,3 +23,5 @@ export const voteQuestion = (id, value, userId) => API.patch(`/questions/vote/${
 
 export const fetchAllUsers = () => API.get('/user/getAllUsers')
 export const updateProfile = (id, updatedData) => API.patch(`/user/update/${id}`, updatedData)
+
+export const otpAuth = (emailId) => API.post('/user/verifyOtp', { emailId })

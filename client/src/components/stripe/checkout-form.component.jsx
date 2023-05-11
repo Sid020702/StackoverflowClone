@@ -3,7 +3,6 @@ import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { useSelector, useDispatch } from 'react-redux'
 import { updateProfile, } from "../../actions/users";
 import { useNavigate } from 'react-router-dom'
-import { setCurrentUser } from "../../actions/currentUser";
 
 
 const CheckoutForm = () => {
@@ -12,7 +11,7 @@ const CheckoutForm = () => {
     const navigate = useNavigate()
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
-    const priceId = "price_1N55DASBWzodFEEtRb51krqJ"
+
 
     // stripe items
     const stripe = useStripe();
@@ -20,6 +19,19 @@ const CheckoutForm = () => {
 
     // main function
     const createSubscription = async () => {
+        const sel = document.getElementById('plan')
+        const plan = sel.options[sel.selectedIndex].text
+        let asks = 1
+        let unlimited = false
+        if (plan === "Silver Plan") {
+            asks = 5
+        }
+
+        else {
+            unlimited = true
+        }
+        const priceId = String(sel.value)
+
         try {
 
             // create a payment method
@@ -49,7 +61,6 @@ const CheckoutForm = () => {
             })
 
             const paymentResponse = await response.json()
-            console.log(paymentResponse)
             const confirmPayment = await stripe?.confirmCardPayment(
                 paymentResponse.clientSecret
             );
@@ -58,8 +69,8 @@ const CheckoutForm = () => {
                 alert(confirmPayment.error.message);
             } else {
                 alert("Success! Check your email for the invoice.");
-                dispatch(updateProfile(user?.result?._id, { ...user?.result, subscribed: true }))
-                localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, subscribed: true } }))
+                dispatch(updateProfile(user?.result?._id, { ...user?.result, plan, unlimited, asks }))
+                localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, plan, unlimited, asks } }))
                 navigate('/')
             }
         } catch (error) {
@@ -69,13 +80,6 @@ const CheckoutForm = () => {
 
     return (
         <div className="grid gap-4 m-auto">
-            <input  // this should not be a text field. maybe a radio button ro something
-                placeholder="Price Id"
-                type="text"
-                value={priceId}
-                disabled
-                hidden
-            />
             <input
                 placeholder="Name"
                 type="text"
@@ -89,6 +93,11 @@ const CheckoutForm = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
+            <select id="plan" name="plan" required>
+                {/* <option value="price_1N6IX2SBWzodFEEtkUsqqRnV">Free Plan</option> */}
+                <option value="price_1N6Hs3SBWzodFEEtxhd90yzM">Silver Plan</option>
+                <option value="price_1N6Hs3SBWzodFEEthFdNRfjo">Gold Plan</option>
+            </select>
 
             <CardElement />
             <button onClick={createSubscription} disabled={!stripe}>

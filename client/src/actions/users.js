@@ -1,5 +1,4 @@
 import * as api from "../api/index.js"
-import { setCurrentUser } from "./currentUser.js"
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
@@ -18,6 +17,8 @@ export const updateProfile = (id, updatedData) => async (dispatch) => {
         console.log(error)
     }
 }
+
+export const otpAuth = async (emailId) => await api.otpAuth(emailId)
 
 
 

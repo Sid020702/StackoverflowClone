@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { askQuestion } from '../../actions/question'
+import { updateProfile } from '../../actions/users'
+
 const AskQuestion = () => {
     const [questionTitle, setQuestionTitle] = useState(null)
     const [questionBody, setQuestionBody] = useState(null)
@@ -15,6 +17,8 @@ const AskQuestion = () => {
         e.preventDefault()
         // console.log({ questionTitle, questionBody, questionTags })
         dispatch(askQuestion({ questionTitle, questionBody, questionTags, userPosted: user.result.name, userId: user.result._id }, navigate))
+        dispatch(updateProfile(user?.result?._id, { ...user.result, asks: user.result.asks - 1, askedOn: Date.now() }))
+        localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, asks: user.result.asks - 1, askedOn: Date.now() } }))
     }
     const handleEnter = (e) => {
         if (e.key === 'Enter') {

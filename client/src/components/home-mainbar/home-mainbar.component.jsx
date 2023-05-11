@@ -3,9 +3,13 @@ import { useLocation } from 'react-router-dom'
 import QuestionList from './questions-list.component'
 import { useNavigate } from 'react-router-dom'
 import './home-mainbar.styles.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { updateProfile } from '../../actions/users'
 const HomeMainbar = () => {
     const questionsList = useSelector(state => state.questionsReducer)
+
+
 
 
     // var questionsList = [{
@@ -40,7 +44,23 @@ const HomeMainbar = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const user = useSelector(state => state.currentUserReducer)
-    console.log(user)
+    const dispatch = useDispatch()
+    let asks = 1
+    if (user?.result.plan === 'Silver Plan') {
+        asks = 5
+    }
+
+    useEffect(() => {
+        const askedOn = user?.result.askedOn
+        const date1 = new Date(askedOn)
+        if (askedOn) {
+            const date2 = new Date()
+            if (!(date1.toJSON().substring(0, 10) === date2.toJSON().substring(0, 10))) {
+                dispatch(updateProfile(user?.result?._id, { ...user.result, asks, askedOn: Date.now() }))
+                localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, asks, askedOn: Date.now() } }))
+            }
+        }
+    }, [user, dispatch, asks])
 
     const checkAuth = () => {
         if (user === null) {
@@ -48,8 +68,11 @@ const HomeMainbar = () => {
             navigate('/Auth')
         }
 
-        else if (!user?.result.subscribed) {
-            alert("Your free trial is over. Kindly subscribe to continue")
+        else if (user?.result.plan === "none" && user?.result?.asks === 0) {
+            alert("Your free plan allowance is over. Kindly subscribe to a plan to continue")
+        }
+        else if (user?.result.plan !== "none" && user?.result?.asks === 0) {
+            alert("Your subcription plan allowance is over!")
         }
         else {
             navigate('/AskQuestion')

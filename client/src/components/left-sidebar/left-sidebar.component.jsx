@@ -5,9 +5,8 @@ import Globe from '../../assets/Globe.png'
 import { useSelector } from 'react-redux'
 const LeftSidebar = () => {
     const currentUser = useSelector(state => state.currentUserReducer)
-    const subscribed = currentUser?.result.subscribed
+    const plan = currentUser?.result.plan
 
-    console.log(subscribed)
 
     return (
         <div className='left-sidebar'>
@@ -28,7 +27,7 @@ const LeftSidebar = () => {
                         <p>Users</p>
                     </NavLink>
                     {
-                        !subscribed ? (
+                        plan === "none" ? (
                             <NavLink to="/Subscribe" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>
                                 <p>Subscribe</p>
                             </NavLink>

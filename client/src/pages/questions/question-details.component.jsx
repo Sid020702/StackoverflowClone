@@ -15,7 +15,6 @@ import { useLocation } from 'react-router-dom'
 const QuestionDetails = () => {
     const [Answer, setAnswer] = useState('')
     const questionsList = useSelector(state => state.questionsReducer)
-    console.log(questionsList)
     const navigate = useNavigate()
     const { id } = useParams()
     const dispatch = useDispatch()
