@@ -25,3 +25,13 @@ export const fetchAllUsers = () => API.get('/user/getAllUsers')
 export const updateProfile = (id, updatedData) => API.patch(`/user/update/${id}`, updatedData)
 
 export const otpAuth = (emailId) => API.post('/user/verifyOtp', { emailId })
+
+// Posts
+
+export const addPost = (postData) => { return API.post('/posts/add', postData) }
+export const getAllPosts = () => { return API.get('/posts/get') }
+
+export const likePost = (id, value, userId) => { return API.post(`/posts/like/${id}`, { value, userId }) }
+export const deletePost = (id) => { return API.delete(`posts/delete/${id}`) };
+
+export const addFriend = (id, friendId, value) => API.patch(`/user/addFriend/${friendId}`, { id, value })

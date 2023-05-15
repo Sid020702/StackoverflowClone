@@ -1,0 +1,8 @@
+.post-preview {
+    width: 50%;
+    border: 2px solid black;
+}
+
+.post-preview img {
+    background: no-repeat center cover/center;
+}

@@ -18,3 +18,11 @@
     padding: 24px;
     box-sizing: border-box;
 }
+
+.wrapper {
+    border: 1px solid grey;
+}
+
+.editor {
+    background-color: lavender;
+}

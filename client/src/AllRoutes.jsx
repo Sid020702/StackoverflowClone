@@ -9,6 +9,9 @@ import Tags from './pages/tags/tags.component'
 import Users from './pages/users/users.component'
 import UserProfile from './pages/user-profile/user-profile.component'
 import Subscribe from './pages/subscribe/subscribe.component'
+import Posts from './pages/posts/posts.component'
+import AddPost from './pages/add-post/add-post.component'
+import Friends from './pages/friends/friends.component'
 const AllRoutes = () => {
     return (
         <Routes>
@@ -16,11 +19,14 @@ const AllRoutes = () => {
             <Route exact path="/Auth" element={<Auth />} />
             <Route exact path="/Questions" element={<Questions />} />
             <Route exact path="/AskQuestion" element={<AskQuestion />} />
+            <Route exact path="/AddPost" element={<AddPost />} />
             <Route exact path="/Questions/:id" element={<DisplayQuestion />} />
             <Route exact path="/Tags" element={<Tags />} />
             <Route exact path="/Users" element={<Users />} />
             <Route exact path="/User/:id" element={<UserProfile />} />
             <Route exact path="/Subscribe" element={<Subscribe />} />
+            <Route exact path="/Posts" element={<Posts />} />
+            <Route exact path="/Friends" element={<Friends />} />
         </Routes>
     )
 }

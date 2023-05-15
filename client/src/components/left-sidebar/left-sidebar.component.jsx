@@ -26,6 +26,12 @@ const LeftSidebar = () => {
                     <NavLink to="/Users" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>
                         <p>Users</p>
                     </NavLink>
+                    <NavLink to="/Posts" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>
+                        <p>All Posts</p>
+                    </NavLink>
+                    <NavLink to="/Friends" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>
+                        <p>Friends</p>
+                    </NavLink>
                     {
                         plan === "none" ? (
                             <NavLink to="/Subscribe" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>

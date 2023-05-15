@@ -11,6 +11,8 @@ const userSchema = mongoose.Schema({
     askedOn: { type: Date, default: Date.now },
     unlimited: { type: Boolean, default: false },
     joinedOn: { type: Date, default: Date.now },
+    friends: { type: Object, default: {} },
+    requests: { type: [Object] }
 
 })
 

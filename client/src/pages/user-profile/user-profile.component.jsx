@@ -10,9 +10,12 @@ import { faBirthdayCake, faPen } from '@fortawesome/free-solid-svg-icons'
 import EditProfileForm from './edit-profile-form.component'
 import ProfileBio from './profile-bio.component'
 import './user-profile.styles.css'
+import { useDispatch } from 'react-redux'
+import { addFriend } from '../../actions/users'
 
 
 const UserProfile = () => {
+    const dispatch = useDispatch()
     let users = useSelector(state => state.usersReducer)
     const { id } = useParams()
     const [Switch, setSwitch] = useState(false)
@@ -39,11 +42,51 @@ const UserProfile = () => {
                         </div>
                         {
 
-                            currentUser?.result._id === id && (
+                            currentUser?.result._id === id ? (
                                 <button type='button' onClick={() => setSwitch(true)} className='edit-profile-btn'>
                                     <FontAwesomeIcon icon={faPen} />Edit Profile
                                 </button>
-                            )
+                            ) :
+                                (currentUser?.result?.friends?.hasOwnProperty(id)) ?
+                                    (currentUser?.result?.friends[id] == 'request sent') ?
+                                        (
+                                            <button onClick={() => {
+                                                if (currentUser)
+                                                    dispatch(addFriend(currentUser?.result._id, id, "cancel request"))
+                                            }
+                                            } type='button'>
+                                                <div>Request sent</div>
+
+                                            </button>
+                                        ) :
+                                        (
+                                            <button onClick={() => {
+                                                if (currentUser)
+                                                    dispatch(addFriend(currentUser?.result._id, id, "remove friend"))
+                                            }
+                                            } type='button'>
+                                                <div>Remove Friend</div>
+
+                                            </button >
+                                        ) : currentProfile?.friends?.hasOwnProperty(currentUser?.result?._id) ?
+                                        (
+                                            <button onClick={() => {
+                                                if (currentUser)
+                                                    dispatch(addFriend(currentUser?.result._id, id, "accept request"))
+                                            }
+                                            } type='button'>
+                                                <div>Accept Request</div>
+
+                                            </button>
+                                        ) :
+                                        <button onClick={() => {
+                                            if (currentUser)
+                                                dispatch(addFriend(currentUser?.result._id, id, "send request"))
+                                        }
+                                        } type='button'>
+                                            <div>Add Friend</div>
+
+                                        </button>
 
                         }
                     </div>

@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import { fetchAllQuestions } from './actions/question';
 import { fetchAllUsers } from './actions/users';
 import Chatbot from './components/chatbot/chatbot.component';
+import { fetchAllPosts } from './actions/posts';
 function App() {
   const dispatch = useDispatch()
   const widget = document.getElementById('launcher-svg-container')
@@ -15,13 +16,14 @@ function App() {
   useEffect(() => {
     dispatch(fetchAllQuestions())
     dispatch(fetchAllUsers())
+    dispatch(fetchAllPosts())
   }, [dispatch])
   return (
     <div className="App">
       <Router>
         <Navbar />
         <AllRoutes />
-        {/* <Chatbot /> */}
+        <Chatbot />
       </Router>
     </div>
   );

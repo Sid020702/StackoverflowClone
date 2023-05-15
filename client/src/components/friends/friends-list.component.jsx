@@ -1,18 +1,22 @@
 import React from 'react'
+import User from '../../pages/users/user.component'
 import { useSelector } from 'react-redux'
-import './users.styles.css'
-import User from './user.component'
-const UsersList = () => {
+const FriendsList = ({ friends }) => {
+    console.log(friends)
     const users = useSelector(state => state.usersReducer)
+    let friendList = []
+    if (friends)
+        friendList = users?.filter(user => friends[user._id] == "friend")
     return (
         <div className='user-list-container'>
             {
-                users.map(user => (
+                friendList?.map(user => (
                     <User user={user} key={user._id} />
                 ))
             }
         </div>
     )
+
 }
 
-export default UsersList
+export default FriendsList

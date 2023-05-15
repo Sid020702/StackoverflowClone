@@ -1,0 +1,33 @@
+.request-list-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 20px;
+    padding: 5px;
+
+}
+
+.request-list-container span {
+    font-size: 18px;
+
+}
+
+.user {
+    display: flex;
+    width: 75%;
+    align-items: center;
+    justify-content: space-around;
+
+}
+
+.accept {
+    display: flex;
+    justify-content: center;
+}
+
+.accept img {
+    width: 5%;
+    cursor: pointer;
+    margin: 0px 10px;
+}

@@ -44,7 +44,7 @@ const AskQuestion = () => {
                         </label>
                         <label htmlFor="ask-ques-tags">
                             <h4>Tags</h4>
-                            <p>Add upto 5 tags ti describe what your question is about </p>
+                            <p>Add upto 5 tags to describe what your question is about </p>
                             <input type="text" id="ask-ques-tags" onChange={(e) => { setQuestionTags(e.target.value.split(" ")) }} placeholder='e.g. (xml typescript word)' />
                         </label>
 

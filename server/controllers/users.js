@@ -9,7 +9,7 @@ export const getAllUsers = async (req, res) => {
         const allUsers = await User.find()
         const allUserDetails = []
         allUsers.forEach(user => {
-            allUserDetails.push({ _id: user._id, name: user.name, about: user.about, tags: user.tags, joinedOn: user.joinedOn, subscribed: user.subscribed })
+            allUserDetails.push({ _id: user._id, name: user.name, about: user.about, tags: user.tags, joinedOn: user.joinedOn, friends: user.friends })
         })
         res.status(200).json(allUserDetails)
     } catch (error) {
@@ -46,7 +46,6 @@ export const createSubscription = async (req, res) => {
 
         // get the price id from the front-end
         const priceId = req.body.priceId;
-        console.log(priceId)
 
         // create a stripe subscription
         const subscription = await stripe.subscriptions.create({
@@ -65,7 +64,6 @@ export const createSubscription = async (req, res) => {
             metadata: { customerEmail: req.body.email }
         });
 
-        console.log(subscription)
 
 
         // return the client secret and subscription id
@@ -76,7 +74,63 @@ export const createSubscription = async (req, res) => {
     } catch (error) {
         console.log(error)
     }
+}
 
+export const addFriend = async (req, res) => {
+    try {
+        const { id: _id, value } = req.body
+        const { friendId } = req.params
+        const currentUser = await User.findById(_id)
+        const friend = await User.findById(friendId)
+        let requests2 = friend.requests
+        let friends2 = friend.requests.friends
+        let requests1 = currentUser.requests
+        let friends1 = currentUser.friends
+        if (!friends1) {
+            friends1 = {}
+        }
+        if (!friends2) {
+            friends2 = {}
+        }
+        if (value === "send request") {
+            friends1[friendId] = 'request sent'
+            requests2.push(currentUser)
+        }
+        else if (value === "cancel request") {
+            friends1 = Object.keys(friends1).filter(key => key != friendId).reduce((obj, key) => {
+                obj[key] = friends1[key]
+                return obj
+            }, {})
+            requests2 = requests2.filter(user => user._id !== _id)
+        }
 
+        else if (value === "remove friend") {
+            friends1 = Object.keys(friends1).filter(key => key != friendId).reduce((obj, key) => {
+                obj[key] = friends1[key]
+                return obj
+            }, {})
+            friends2 = Object.keys(friends2).filter(key => key != _id).reduce((obj, key) => {
+                obj[key] = friends2[key]
+                return obj
+            }, {})
+        }
+        else if (value === "accept request") {
+            friends1[friendId] = 'friend'
+            friends2[_id] = 'friend'
+            requests1 = requests1.filter(user => user._id != friendId)
+        }
+        else if (value === "reject request") {
+            requests1 = requests1.filter(user => user._id != friendId)
+            friends2 = Object.keys(friends2).filter(key => key != _id).reduce((obj, key) => {
+                obj[key] = friends2[key]
+                return obj
+            }, {})
+        }
+        await User.findByIdAndUpdate(friendId, { $set: { requests: requests2, friends: friends2 } })
+        const updatedProfile = await User.findByIdAndUpdate(_id, { $set: { requests: requests1, friends: friends1 } }, { new: true })
+        res.status(200).json(updatedProfile)
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 }
 

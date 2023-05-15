@@ -1,4 +1,5 @@
 import * as api from "../api/index.js"
+import { setCurrentUser } from "./currentUser.js"
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
@@ -18,7 +19,19 @@ export const updateProfile = (id, updatedData) => async (dispatch) => {
     }
 }
 
-export const otpAuth = async (emailId) => await api.otpAuth(emailId)
 
+
+export const addFriend = (id, friendId, value) => async (dispatch) => {
+    try {
+        const { data } = await api.addFriend(id, friendId, value)
+        dispatch(fetchAllUsers())
+        const localUser = JSON.parse(localStorage.getItem('Profile'))
+        localStorage.setItem('Profile', JSON.stringify({ ...localUser, result: data }))
+        dispatch({ type: 'UPDATE_CURRENT_USER', payload: data })
+        dispatch(setCurrentUser(JSON.parse(localStorage.getItem('Profile'))))
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 

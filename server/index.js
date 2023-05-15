@@ -4,6 +4,7 @@ import cors from 'cors'
 import userRoutes from './routes/users.js'
 import questionRoutes from './routes/questions.js'
 import answerRoutes from './routes/answer.js'
+import postRoutes from './routes/posts.js'
 import dotenv from 'dotenv'
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 app.use('/user', userRoutes)
 app.use('/questions', questionRoutes)
 app.use('/answer', answerRoutes)
+app.use('/posts', postRoutes)
 
 const PORT = process.env.PORT || 5000
 

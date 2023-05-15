@@ -1,0 +1,29 @@
+.tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin: 10px;
+}
+
+.tab {
+    width: 100%;
+    margin: 5px;
+    padding: 4px;
+    cursor: pointer;
+}
+
+.tab span {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 5px;
+    padding: 4px;
+    width: 100%;
+}
+
+
+
+.active-tab {
+    border-bottom: 4px solid #ef8236;
+
+}
