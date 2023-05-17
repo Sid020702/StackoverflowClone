@@ -26,3 +26,9 @@
 .editor {
     background-color: lavender;
 }
+
+@media screen and (max-width:575px) {
+    .home-container-2 {
+        width: 100%;
+    }
+}

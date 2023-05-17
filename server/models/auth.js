@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema({
     asks: { type: Number, default: 1 },
     askedOn: { type: Date, default: Date.now },
     unlimited: { type: Boolean, default: false },
+    subId: { type: String },
     joinedOn: { type: Date, default: Date.now },
     friends: { type: Object, default: {} },
     requests: { type: [Object] }

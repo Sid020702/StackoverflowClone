@@ -20,6 +20,7 @@ const CheckoutForm = () => {
     // main function
     const createSubscription = async () => {
         const sel = document.getElementById('plan')
+        const button = document.getElementById('sub-btn')
         const plan = sel.options[sel.selectedIndex].text
         let asks = 1
         let unlimited = false
@@ -35,6 +36,7 @@ const CheckoutForm = () => {
         try {
 
             // create a payment method
+            button.innerHTML = "Processing..."
             const paymentMethod = await stripe?.createPaymentMethod({
                 type: "card",
                 card: elements?.getElement(CardElement),
@@ -45,7 +47,7 @@ const CheckoutForm = () => {
             });
 
             // call the backend to create subscription
-            const response = await fetch("http://localhost:5000/user/create-subscription", {
+            const response = await fetch("https://mernappbackend-qgha.onrender.com/create-subscription", {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -68,12 +70,13 @@ const CheckoutForm = () => {
             if (confirmPayment?.error) {
                 alert(confirmPayment.error.message);
             } else {
-                alert("Success! Check your email for the invoice.");
-                dispatch(updateProfile(user?.result?._id, { ...user?.result, plan, unlimited, asks }))
-                localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, plan, unlimited, asks } }))
+                alert("Success! Thank you for subscribing.");
+                dispatch(updateProfile(user?.result?._id, { ...user?.result, plan, unlimited, asks, subId: paymentResponse.subscriptionId }))
+                localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, plan, unlimited, asks, subId: paymentResponse.subscriptionId } }))
                 navigate('/')
             }
         } catch (error) {
+            button.innerHTML = "Subscribe"
             console.log(error);
         }
     };
@@ -100,7 +103,7 @@ const CheckoutForm = () => {
             </select>
 
             <CardElement />
-            <button onClick={createSubscription} disabled={!stripe}>
+            <button id="sub-btn" onClick={createSubscription} disabled={!stripe}>
                 Subscribe
             </button>
         </div>

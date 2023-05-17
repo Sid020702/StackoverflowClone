@@ -1,9 +1,16 @@
 import React from 'react'
 
-const PostPreview = ({ postUrl }) => {
+const PostPreview = ({ postUrl, type }) => {
     return (
         <div className='post-preview'>
-            <img src={postUrl} alt="img" />
+            {
+                type === 'image' ? (
+                    <img src={postUrl} alt="img" />
+                ) :
+                    <video style={{ width: "75%" }} controls>
+                        <source src={postUrl} type="video/mp4" />
+                    </video>
+            }
         </div>
     )
 }

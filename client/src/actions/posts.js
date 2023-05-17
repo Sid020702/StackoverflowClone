@@ -7,6 +7,14 @@ export const setUrl = (url) => {
         }
     )
 }
+export const setType = (postType) => {
+    return (
+        {
+            type: 'SET_TYPE',
+            payload: postType
+        }
+    )
+}
 
 export const addPost = (postData, navigate) => async (dispatch) => {
     try {

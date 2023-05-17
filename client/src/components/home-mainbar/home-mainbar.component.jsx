@@ -11,7 +11,6 @@ const HomeMainbar = () => {
 
 
 
-
     // var questionsList = [{
     //     id: 1,
     //     votes: 3,
@@ -96,10 +95,10 @@ const HomeMainbar = () => {
                 {
                     !questionsList.data ?
                         <h1>Loading...</h1> :
-                        <>
+                        <div className='main-bar-content'>
                             <p>{questionsList.data.length} questions</p>
                             <QuestionList questionsList={questionsList.data} />
-                        </>
+                        </div>
                 }
             </div>
         </div>

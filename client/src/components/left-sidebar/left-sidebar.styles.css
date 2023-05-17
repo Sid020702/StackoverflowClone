@@ -4,7 +4,13 @@
     transition: box-shadow ease-in-out 0.1s transform ease-in-out 1s;
     transform: translateZ(0);
     box-sizing: border-box;
+    background: white;
     font-size: 13px;
+}
+
+.resp-width {
+    display: none;
+    width: 0px
 }
 
 .side-nav {
@@ -38,4 +44,11 @@
     color: black;
     background-color: rgb(225, 225, 225);
     border-right: solid 3px #ef8236;
+}
+
+@media screen and (max-width:575px) {
+    .left-sidebar {
+        position: absolute;
+        height: fit-content;
+    }
 }

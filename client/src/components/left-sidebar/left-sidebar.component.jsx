@@ -2,12 +2,22 @@ import React from 'react'
 import './left-sidebar.styles.css'
 import { NavLink } from 'react-router-dom'
 import Globe from '../../assets/Globe.png'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { deleteSubscription } from '../../actions/users'
+import { updateProfile } from '../../actions/users'
 const LeftSidebar = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const currentUser = useSelector(state => state.currentUserReducer)
     const plan = currentUser?.result.plan
-
-
+    const handleClick = () => {
+        dispatch(deleteSubscription(currentUser?.result.subId))
+        dispatch(updateProfile(currentUser?.result?._id, { ...currentUser?.result, plan: "none", unlimited: false, asks: 1, subId: "" }))
+        localStorage.setItem('Profile', JSON.stringify({ ...currentUser, result: { ...currentUser?.result, plan: "none", unlimited: false, asks: 1, subId: "" } }))
+        alert("Unsubscribed successfully")
+        navigate('/')
+    }
     return (
         <div className='left-sidebar'>
             <div className='side-nav'>
@@ -33,11 +43,11 @@ const LeftSidebar = () => {
                         <p>Friends</p>
                     </NavLink>
                     {
-                        plan === "none" ? (
+                        plan === "none" || plan === undefined ? (
                             <NavLink to="/Subscribe" className="side-nav-links" activeclass="active" style={{ paddingLeft: "40px" }}>
                                 <p>Subscribe</p>
                             </NavLink>
-                        ) : (<a className='side-nav-links' style={{ paddingLeft: "40px" }}><p>Subsribed</p></a>)
+                        ) : (<a onClick={handleClick} className='side-nav-links' style={{ paddingLeft: "40px", cursor: "pointer" }}><p>Unsubscribe</p></a>)
                     }
                 </div>
             </div>

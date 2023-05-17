@@ -1,8 +1,9 @@
 import React from 'react'
 import { useState, useEffect, useRef } from 'react'
-import { setUrl } from '../../actions/posts'
+import { setUrl, setType } from '../../actions/posts'
 import { useDispatch } from 'react-redux'
 import PostPreview from '../../components/post-preview/post-preview.component';
+import './upload-widget.styles.css'
 
 
 const UploadWidget = () => {
@@ -11,6 +12,7 @@ const UploadWidget = () => {
     const widgetRef = useRef()
     const [uploaded, setUploaded] = useState(false)
     const [postUrl, setPostUrl] = useState(null)
+    const [type, setPostType] = useState(null)
 
 
 
@@ -30,6 +32,7 @@ const UploadWidget = () => {
                 setPostUrl(result.info.secure_url)
                 setUploaded(true)
                 dispatch(setUrl(result.info.secure_url))
+                dispatch(setType(type))
             }
         })
 
@@ -39,16 +42,26 @@ const UploadWidget = () => {
             {
                 !uploaded ?
                     (
-                        <button onClick={(e) => {
-                            e.preventDefault()
-                            widgetRef.current.open()
-                        }
-                        }>Upload Image</button>
+                        <>
+                            <button onClick={(e) => {
+                                e.preventDefault()
+                                setPostType('image')
+                                widgetRef.current.open()
+                            }
+                            }>Upload Image</button>
+                            <button onClick={(e) => {
+                                e.preventDefault()
+                                setPostType('video')
+                                widgetRef.current.open()
+                            }
+                            }>Upload Video</button>
+                        </>
                     )
                     :
                     (
                         <>
-                            <PostPreview postUrl={postUrl} />
+                            <PostPreview postUrl={postUrl} type={type} />
+                            <span className='reupload' onClick={() => setUploaded(false)}>Delete</span>
                         </>
 
                     )

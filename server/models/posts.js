@@ -9,6 +9,7 @@ const PostSchema = mongoose.Schema({
     userPosted: { type: String, required: "Question must have an author" },
     usersLiked: { type: [String], default: [] },
     userId: { type: String },
+    type: { type: String },
     postedOn: { type: Date, default: Date.now }
 })
 

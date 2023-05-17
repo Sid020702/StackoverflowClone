@@ -22,7 +22,16 @@ const Post = ({ post }) => {
                 <span id='moment'>{moment(post.postedOn).fromNow()}</span>
             </div>
             <div className="post-image">
-                <img src={post.postUrl} alt="img" />
+                {
+                    post.type === 'image' ? (
+                        <img src={post.postUrl} alt="img" />
+                    ) :
+                        (
+                            <video style={{ width: "100%" }} controls>
+                                <source src={post.postUrl} type="video/mp4" />
+                            </video>
+                        )
+                }
             </div>
             <div className='content'>
                 <p>{post.postContent}</p>

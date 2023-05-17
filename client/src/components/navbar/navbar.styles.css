@@ -26,6 +26,10 @@
     padding: 5px 25px;
 }
 
+#icon {
+    display: none;
+}
+
 .nav-item {
     margin: 0px 3px;
     font-size: small;
@@ -46,13 +50,15 @@
 }
 
 .navbar form {
+    display: flex;
     flex-grow: 1;
     padding: 0px 12px;
     position: relative;
 }
 
 .navbar form input {
-    min-width: 90%;
+    width: 80%;
+    flex-shrink: 2;
     margin: 0;
     padding: 8px 10px 8px 32px;
     font-size: 13px;
@@ -75,4 +81,93 @@
 
 .nav-links:hover {
     background-color: #d3e4eb;
+}
+
+.burger {
+    width: 15px;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 16px;
+    left: 10px;
+    cursor: pointer;
+}
+
+.burger div {
+    width: 100%;
+    border: 2px solid black;
+    margin: 2px;
+}
+
+.hide-icon {
+    display: none;
+}
+
+.hide-burger {
+    display: none;
+}
+
+@media screen and (max-width:865px) {
+
+    .hide-resp {
+        display: none;
+    }
+
+}
+
+@media screen and (max-width:575px) {
+    .hide-icon {
+        display: block;
+    }
+
+
+    .nav-logo {
+        display: none;
+    }
+
+    .hide-burger {
+        margin: 0;
+        padding: 0;
+        width: 0;
+        display: block;
+    }
+
+
+    #logo {
+        display: none;
+    }
+
+    .hide-icon {
+        display: block;
+    }
+
+    #icon {
+        display: inline;
+        width: 100%;
+    }
+
+    .nav-item {
+        width: 8%;
+    }
+
+
+    .navbar form {
+        flex-grow: 0;
+        width: 40%;
+    }
+
+    .navbar button {
+        width: 25%;
+    }
+
+    .burger {
+        display: flex;
+    }
+
+
+
+
+
 }

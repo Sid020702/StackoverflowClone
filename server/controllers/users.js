@@ -31,6 +31,18 @@ export const updateProfile = async (req, res) => {
     }
 }
 
+
+export const deleteSubscription = async (req, res) => {
+    try {
+        const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+        const { subId } = req.params
+        await stripe.subscriptions.del(subId)
+        res.status(200).json({ message: "Unsubscribed successfully" })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
 export const createSubscription = async (req, res) => {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
     try {

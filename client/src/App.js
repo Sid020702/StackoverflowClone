@@ -11,8 +11,6 @@ import Chatbot from './components/chatbot/chatbot.component';
 import { fetchAllPosts } from './actions/posts';
 function App() {
   const dispatch = useDispatch()
-  const widget = document.getElementById('launcher-svg-container')
-  widget?.addEventListener('click', () => { console.log('Clicked') })
   useEffect(() => {
     dispatch(fetchAllQuestions())
     dispatch(fetchAllUsers())

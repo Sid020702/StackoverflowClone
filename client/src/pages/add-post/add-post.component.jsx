@@ -12,6 +12,7 @@ const AddPost = () => {
     const user = useSelector(state => state.currentUserReducer)
     const dispatch = useDispatch()
     const postUrl = useSelector(state => state.postsReducer.uploadedUrl)
+    const type = useSelector(state => state.postsReducer.postType)
     const [postTitle, setPostTitle] = useState('')
     const [postContent, setPostContent] = useState('')
     const [postTags, setPostTags] = useState('')
@@ -28,6 +29,7 @@ const AddPost = () => {
             postUrl,
             postContent,
             postTags,
+            type,
             userPosted: user?.result?.name,
             userId: user?.result?._id
 

@@ -5,7 +5,12 @@
     padding: 0;
 }
 
-
+.grid {
+    width: 50%;
+    display: grid;
+    gap: 4;
+    margin: auto;
+}
 
 .checkout-form input {
     width: 30%;

@@ -34,4 +34,8 @@ export const addFriend = (id, friendId, value) => async (dispatch) => {
     }
 }
 
+export const deleteSubscription = (id) => async (dispatch) => {
+    await api.deleteSubscription(id)
+}
+
 

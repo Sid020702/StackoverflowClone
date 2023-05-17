@@ -86,3 +86,27 @@
     background-color: #edeff0;
     color: #39739d;
 }
+
+@media screen and (max-width:865px) {
+    .main-bar {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:575px) {
+    .main-bar {
+        float: none;
+    }
+
+
+}
+
+@media screen and (max-width:400px) {
+    .main-bar-header {
+        flex-direction: column;
+    }
+
+    .display-question-container {
+        flex-wrap: wrap;
+    }
+}
