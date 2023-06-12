@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const API = axios.create({ baseURL: "https://mernappbackend-qgha.onrender.com" })
-// const API = axios.create({ baseURL: "http://localhost:5000" })
+// const API = axios.create({ baseURL: "https://mernappbackend-qgha.onrender.com" })
+const API = axios.create({ baseURL: "http://localhost:5000" })
 API.interceptors.request.use(req => {
     if (localStorage.getItem('Profile')) {
         req.headers.authorization = `Bearer ${JSON.parse(localStorage.getItem('Profile')).token}`
@@ -36,3 +36,5 @@ export const deletePost = (id) => { return API.delete(`posts/delete/${id}`) };
 
 export const addFriend = (id, friendId, value) => API.patch(`/user/addFriend/${friendId}`, { id, value })
 export const deleteSubscription = (id) => API.delete(`user/delete-subscription/${id}`)
+
+export const logIP = (ip, city) => API.post('/user/ip', { ip, city })

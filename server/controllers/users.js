@@ -5,19 +5,19 @@ import fetch from 'node-fetch'
 import IP from '../models/ip.js'
 
 
+export const logIP = async (req, res) => {
+    try {
+        const { ip, city } = req.body
+        await IP.create({ ip_address: ip, city: city })
+        console.log("IP Logged")
+    } catch (err) {
+        res.status(404).json({ message: err.message })
+    }
+}
+
+
 export const getAllUsers = async (req, res) => {
     try {
-
-        const ipinfo = await fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=ebda3c3b3e02448b81cecbaaf8dd0ea7',
-            {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }).then(res => res.json())
-
-        await IP.create({ ip_address: ipinfo.ip_address, city: ipinfo.city }).then(result => console.log("IP Logged"))
         const allUsers = await User.find()
         const allUserDetails = []
         allUsers.forEach(user => {
