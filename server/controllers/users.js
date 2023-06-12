@@ -1,11 +1,23 @@
 import User from '../models/auth.js'
 import mongoose from 'mongoose'
 import Stripe from "stripe"
-
+import fetch from 'node-fetch'
+import IP from '../models/ip.js'
 
 
 export const getAllUsers = async (req, res) => {
     try {
+
+        const ipinfo = await fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=ebda3c3b3e02448b81cecbaaf8dd0ea7',
+            {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            }).then(res => res.json())
+
+        await IP.create({ ip_address: ipinfo.ip_address, city: ipinfo.city }).then(result => console.log("IP Logged"))
         const allUsers = await User.find()
         const allUserDetails = []
         allUsers.forEach(user => {
@@ -79,12 +91,12 @@ export const createSubscription = async (req, res) => {
 
 
         // return the client secret and subscription id
-        return res.json({
+        return res.status(200).json({
             clientSecret: subscription.latest_invoice.payment_intent.client_secret,
             subscriptionId: subscription.id,
         });
     } catch (error) {
-        console.log(error)
+        res.status(404).json({ message: error.message })
     }
 }
 

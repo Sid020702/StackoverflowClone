@@ -32,6 +32,6 @@ const PORT = process.env.PORT || 5000
 const CONNECTION_URL = process.env.CONNECTION_URL
 
 mongoose.connect(CONNECTION_URL)
-    .then(() => app.listen(PORT, () => {
+    .then(() => app.listen(PORT, async () => {
         console.log(`server running on port ${PORT}`)
     })).catch(err => { console.log(err.message) })

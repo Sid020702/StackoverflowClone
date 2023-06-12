@@ -47,7 +47,7 @@ const CheckoutForm = () => {
             });
 
             // call the backend to create subscription
-            const response = await fetch("https://mernappbackend-qgha.onrender.com/create-subscription", {
+            const response = await fetch("https://mernappbackend-qgha.onrender.com/user/create-subscription", {
                 method: "POST",
                 mode: "cors",
                 headers: {
@@ -70,7 +70,7 @@ const CheckoutForm = () => {
             if (confirmPayment?.error) {
                 alert(confirmPayment.error.message);
             } else {
-                alert("Success! Thank you for subscribing.");
+                alert("Payment Successful!");
                 dispatch(updateProfile(user?.result?._id, { ...user?.result, plan, unlimited, asks, subId: paymentResponse.subscriptionId }))
                 localStorage.setItem('Profile', JSON.stringify({ ...user, result: { ...user?.result, plan, unlimited, asks, subId: paymentResponse.subscriptionId } }))
                 navigate('/')

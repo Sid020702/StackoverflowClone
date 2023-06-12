@@ -37,7 +37,7 @@ const UserProfile = () => {
                             </Avatar>
                             <div className="user-name">
                                 <h1>{currentProfile?.name}</h1>
-                                <p><FontAwesomeIcon icon={faBirthdayCake} />Member for {(moment(parseInt(currentProfile?.joinedOn))).fromNow()}</p>
+                                <p><FontAwesomeIcon icon={faBirthdayCake} />Member for {(moment(currentProfile?.joinedOn)).fromNow()}</p>
                             </div>
                         </div>
                         {
