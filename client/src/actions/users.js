@@ -3,15 +3,15 @@ import { setCurrentUser } from "./currentUser.js"
 
 export const fetchAllUsers = () => async (dispatch) => {
     try {
-        const ipinfo = await fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=ebda3c3b3e02448b81cecbaaf8dd0ea7',
-            {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }).then(res => res.json())
-        await api.logIP(ipinfo.ip_address, ipinfo.city)
+        // const ipinfo = await fetch('https://ipgeolocation.abstractapi.com/v1/?api_key=ebda3c3b3e02448b81cecbaaf8dd0ea7',
+        //     {
+        //         method: "GET",
+        //         mode: "cors",
+        //         headers: {
+        //             "Content-Type": "application/json",
+        //         }
+        //     }).then(res => res.json())
+        // await api.logIP(ipinfo.ip_address, ipinfo.city)
         const { data } = await api.fetchAllUsers()
         dispatch({ type: 'FETCH_USERS', payload: data })
     } catch (error) {
