@@ -27,7 +27,8 @@ app.use('/questions', questionRoutes)
 app.use('/answer', answerRoutes)
 app.use('/posts', postRoutes)
 
-const PORT = process.env.PORT || 5000
+// const PORT = process.env.PORT || 5000
+const PORT = 5000
 
 const CONNECTION_URL = process.env.CONNECTION_URL
 
